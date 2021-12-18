@@ -34,9 +34,9 @@ public class MovieController {
         model.addAttribute("movie",movieService.getMovieById(id));
         return "movie-details";
     }
+*/
 
-
-    @PostMapping
+    @PostMapping("add")
     public String addMovie(@Valid @ModelAttribute MovieForm movieForm, BindingResult results){
         //vous pourriez même supprimer l'annotation @ModelAttribute si vous ne comptez
         //pas donner un identifiant personnalisé au backing bean
@@ -51,6 +51,6 @@ public class MovieController {
         movieService.registerMovie(movie);
         return "movie-added";
     }
-    */
+
 
 }
