@@ -4,14 +4,10 @@ package com.saturnindao.dvdstore.web.api;
 
 import com.saturnindao.dvdstore.entity.Movie;
 import com.saturnindao.dvdstore.service.MovieServiceInterface;
-import com.saturnindao.dvdstore.web.form.MovieForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class MovieRessource {
@@ -28,7 +24,7 @@ public class MovieRessource {
     }
 
     @GetMapping("movie/{id}")
-    public Movie get(@PathVariable("id") long id){
+    public Optional<Movie> get(@PathVariable("id") long id){
         return movieService.getMovieById(id);
     }
 
@@ -39,7 +35,7 @@ public class MovieRessource {
     }
 
     @GetMapping("/movie")
-    public List<Movie> list(){
+    public Iterable<Movie> list(){
         return movieService.getMovieList();
     }
 }
