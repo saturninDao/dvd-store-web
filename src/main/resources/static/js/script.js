@@ -1,3 +1,4 @@
+
 fetch('movie')
     .then(res => res.json())
     .then(res => {
@@ -42,25 +43,38 @@ fetch('movie')
 
 function showDetail(id){
     fetch("movie/"+id)
-    .then(res => res.json())
-    .then(res => {
-        var invoiceDetailNode = document.getElementById('movie-detail');
-        invoiceDetailNode.innerHTML = "";
+        .then(res => res.json())
+        .then(res => {
+            console.log(res);
+            var invoiceDetailNode = document.getElementById('movie-detail');
+            invoiceDetailNode.innerHTML = "";
 
-        var p = document.createElement("p");
-        var text = document.createTextNode(`Titre: ${res.title}`);
-        p.appendChild(text);
-        invoiceDetailNode.appendChild(p);
+            var p = document.createElement("p");
+            var text = document.createTextNode(`Titre: ${res.title}`);
+            p.appendChild(text);
+            invoiceDetailNode.appendChild(p);
 
-        p = document.createElement("p");
-        text = document.createTextNode(`Genre: ${res.genre}`);
-        p.appendChild(text);
-        invoiceDetailNode.appendChild(p);
+            p = document.createElement("p");
+            text = document.createTextNode(`Genre: ${res.genre}`);
+            p.appendChild(text);
+            invoiceDetailNode.appendChild(p);
 
-        p = document.createElement("p");
-        text = document.createTextNode(`Description: ${res.description}`);
-        p.appendChild(text);
-        invoiceDetailNode.appendChild(p);
+            p = document.createElement("p");
+            text = document.createTextNode(`Description: ${res.description}`);
+            p.appendChild(text);
+            invoiceDetailNode.appendChild(p);
 
-    });
+            p = document.createElement("p");
+            text = document.createTextNode(`Main actor: ${res.mainActor.firstName} ${res.mainActor.lastName}`);
+            p.appendChild(text);
+            invoiceDetailNode.appendChild(p);
+
+            p = document.createElement("p");
+            var sum = res.reviews.map((a) => a.mark).reduce((a, b) => a + b, 0);
+            var avg = (sum / res.reviews.length) || 0;
+            text = document.createTextNode(`Mark: ${avg}/5`);
+            p.appendChild(text);
+            invoiceDetailNode.appendChild(p);
+
+        });
 }
