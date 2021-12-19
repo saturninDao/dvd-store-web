@@ -2,11 +2,13 @@ package com.saturnindao.dvdstore.web.controller;
 /* Created by Saturnin Dao on 15/12/2021 14:33 */
 
 
+import com.saturnindao.dvdstore.entity.Actor;
 import com.saturnindao.dvdstore.entity.Movie;
 import com.saturnindao.dvdstore.service.MovieServiceInterface;
 import com.saturnindao.dvdstore.web.form.MovieForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +39,7 @@ public class MovieController {
 */
 
     @PostMapping("add")
+    @Transactional
     public String addMovie(@Valid @ModelAttribute MovieForm movieForm, BindingResult results){
         //vous pourriez même supprimer l'annotation @ModelAttribute si vous ne comptez
         //pas donner un identifiant personnalisé au backing bean
@@ -44,7 +47,13 @@ public class MovieController {
         if (results.hasErrors()){
             return "add-movie-form";
         }
+
+        Actor actor = new Actor();
+        actor.setFirstName(movieForm.getPrenom());
+        actor.setLastName(movieForm.getNom());
+
         Movie movie = new Movie();
+        movie.setMainActor(actor);
         movie.setTitle(movieForm.getTitle());
         movie.setGenre(movieForm.getGenre());
         movie.setDescription(movieForm.getDescription());
